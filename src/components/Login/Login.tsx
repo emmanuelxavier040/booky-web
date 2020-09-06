@@ -30,7 +30,7 @@ class Login extends React.Component<LoginProps, any> {
                                     clientId={process.env.REACT_APP_CLIENT_ID + ''}
                                     onSuccess={this.props.userActions.loginUser}
                                     onFailure={() => { }}
-                                    redirectUri={'http://localhost:3000'}
+                                    redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL || 'http://localhost:3000'}
                                     cookiePolicy={'single_host_origin'}
                                 />
                             </p>
