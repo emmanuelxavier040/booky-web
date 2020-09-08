@@ -9,7 +9,6 @@ import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
 import { CardContent, Tooltip, Button } from '@material-ui/core';
 
 interface GroupProps {
