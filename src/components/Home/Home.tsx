@@ -22,8 +22,8 @@ class Home extends React.Component<any, any> {
             <p className="lead">You can bookmark with Booky!</p>
             
             <p>
-              <Button color="primary" variant="outlined" >Create Bookmark</Button>{' '}
-              <Link to="/groups" style={{textDecoration: 'none'}}> <Button color="secondary" variant="outlined" >Groups</Button></Link>
+              <Button color="primary" size='large' variant="outlined" >Create Bookmark</Button>{' '}
+              <Link to="/groups" style={{textDecoration: 'none'}}> <Button color="secondary" size='large' variant="outlined" >Groups</Button></Link>
             </p>
           </Container>
         </section>
