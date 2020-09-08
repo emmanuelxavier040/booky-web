@@ -13,9 +13,10 @@ export const PrivateRoute = (props: any) => {
     return (
         <Route
             {...props}
-            render={() => {
+            render={(props2: any) => {
                 return (
                     <AuthComponent
+                        {...props2}
                         path={props.path}
                         renderComponent={props.componentToRender}
                     />
@@ -70,7 +71,7 @@ class AuthComponent extends React.Component<any, any> {
 
     render() {  
         return (
-            <this.state.renderComponent />
+            <this.state.renderComponent {...this.props}/>
         )
     }
 }
