@@ -4,15 +4,15 @@ import { IAppReducer } from '../reducers/reducers'
 import { IAuthenticationState } from '../reducers/authentication.reducer';
 
 
-interface IavBarStateProps {
+interface INavBarStateProps {
     authentication: IAuthenticationState
 }
 
 interface INavBarDispatchProps { }
 
-export type NavBarProps = IavBarStateProps & INavBarDispatchProps
+export type NavBarProps = INavBarStateProps & INavBarDispatchProps
 
-const mapStateToProps = (state: IAppReducer, props: any): IavBarStateProps => ({
+const mapStateToProps = (state: IAppReducer, props: any): INavBarStateProps => ({
     authentication: state.authentication,
     ...props
 })

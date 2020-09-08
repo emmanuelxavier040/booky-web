@@ -11,6 +11,7 @@ import Badge from '@material-ui/core/Badge';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { GoogleLogout } from 'react-google-login';
 import { userActions } from '../../actions/user.actions'
+import { Link } from 'react-router-dom';
 
 import connect from '../../containers/NavBar.container';
 
@@ -176,8 +177,8 @@ function PrimarySearchAppBar(props: any) {
     return (
         <div className={classes.grow}>
             <AppBar position="static">
-                <Toolbar>
-                    <Button color="inherit">HOME</Button>
+                <Toolbar>                            
+                    <Button color="inherit" component={Link} to="/" style={{color: 'white'}}>HOME</Button>
                     <div className={classes.grow} />
                     <Badge color="secondary">
                     {clientInfo !== null ? clientInfo.firstName : 'Guest'}
