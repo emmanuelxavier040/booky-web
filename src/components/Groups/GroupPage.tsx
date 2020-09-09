@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BooksHome from '../Books/BooksHome';
 
 
 const GroupPage = (props: any) => {
@@ -7,9 +8,7 @@ const GroupPage = (props: any) => {
     return (
         <React.Fragment>
 
-            <div>
-                <h1>Inside Group {groupId}</h1>
-            </div>
+        <BooksHome groupId={groupId}/>
 
         </React.Fragment>
     )

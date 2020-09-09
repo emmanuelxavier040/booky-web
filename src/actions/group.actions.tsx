@@ -19,7 +19,6 @@ function createGroup(group: any) {
         dispatch({ type: groupConstants.CREATE_GROUP_REQUEST_STARTED })
         groupService.createNewGroup({ ...group }).then(
             response => {
-                console.log(response)
                 dispatch({ type: groupConstants.SUCCESS_CREATE_GROUP_REQUEST, data: response})
             },
             error => {
@@ -35,7 +34,7 @@ function getGroup(id: number) {
         dispatch({ type: groupConstants.GET_GROUP_REQUEST_STARTED })
         groupService.getOneGroup(id).then(
             response => {
-                dispatch({ type: groupConstants.SUCCESS_GET_GROUP_REQUEST })
+                dispatch({ type: groupConstants.SUCCESS_GET_GROUP_REQUEST, data: response })
             },
             error => {
                 dispatch({ type: groupConstants.FAILURE_GET_GROUP_REQUEST })
