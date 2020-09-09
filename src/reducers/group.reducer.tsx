@@ -3,7 +3,8 @@ import {groupConstants} from '../constants/GroupConstants';
 export interface IGroupState {
     id: number,
     context: string,
-    url: string,
+    adminIds: Array<number>
+    cardIds: Array<number>
 }
 
 export interface IGroupListState {
@@ -25,7 +26,6 @@ const defaultGroupListState: IGroupListState = {
 }
 
 export const groupListReducer = (state: IGroupListState = defaultGroupListState, action: any): IGroupListState => {    
-    console.log(action)
     switch (action.type) {
 
         case groupConstants.GET_GROUPS_REQUEST_STARTED:

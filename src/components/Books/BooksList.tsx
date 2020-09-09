@@ -1,18 +1,16 @@
 import * as React from 'react';
 import { Container } from '@material-ui/core';
-
-import Group from './Group';
-
+import Book from './Book';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { IGroupListState } from '../../reducers/group.reducer';
+import { ICardListState } from '../../reducers/card.reducer';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1,  
   },
   paper: {
     height: 140,
@@ -23,28 +21,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GroupsList(group: IGroupListState) {
+function BooksList(card: ICardListState) {
   const classes = useStyles();
-
   return (
     <div>     
       <Container>
-        {group.isloadingGroups && <Box display='flex' justifyContent='center' padding={2}>
+        {card.isloadingCards && <Box display='flex' justifyContent='center' padding={2}>
           <CircularProgress />
         </Box>      
         }
         <Grid container className={classes.root} spacing={2}>
           <Grid item xs={12}>
-            <Grid container justify="center" spacing={3}>
-              {group.groupList.map(
-                (group) => {
+            <Grid container  spacing={3}>
+              {card.cardList.map(
+                (card) => {
                   const groupProps = {
-                    id: group.id,
-                    context: group.context
+                    id: card.id,
+                    title: card.title,
+                    url: card.url,
+                    shortUrl: card.shortUrl
                   }
                   return (
-                    <Grid key={group.id} item>
-                      <Group {...groupProps} />
+                    <Grid key={card.id} item>
+                      <Book {...groupProps} />
                     </Grid>
                   )
                 })}
@@ -56,4 +55,4 @@ function GroupsList(group: IGroupListState) {
   );
 }
 
-export default GroupsList
+export default BooksList
