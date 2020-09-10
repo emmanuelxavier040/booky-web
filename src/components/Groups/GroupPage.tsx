@@ -3,7 +3,7 @@ import BooksHome from '../Books/BooksHome';
 
 
 const GroupPage = (props: any) => {
-    const groupId = props.match.params.groupId
+    const groupId = parseInt(props.match.params.groupId)
 
     return (
         <React.Fragment>

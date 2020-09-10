@@ -14,7 +14,11 @@ function createCard(card: any) {
         dispatch({ type: cardConstants.CREATE_CARD_REQUEST_STARTED })
         cardService.createNewCard({ ...card }).then(
             response => {
-                dispatch({ type: cardConstants.SUCCESS_CREATE_CARD_REQUEST, data: response})
+                dispatch({ type: cardConstants.SUCCESS_CREATE_CARD_REQUEST})
+                if(response.status === 'CREATED')
+                    dispatch({ type: cardConstants.CARD_CREATION_STATUS_CREATED, data: response})
+                else
+                    dispatch({ type: cardConstants.CARD_CREATION_STATUS_PENDING})                                
             },
             error => {
                 dispatch({ type: cardConstants.FAILURE_CREATE_CARD_REQUEST })
@@ -28,8 +32,13 @@ function updateCard(card: any) {
     return (dispatch: any) => {
         dispatch({ type: cardConstants.UPDATE_CARD_REQUEST_STARTED })
         cardService.updateCard({ ...card }).then(
-            response => {
-                dispatch({ type: cardConstants.SUCCESS_UPDATE_CARD_REQUEST, data: response})
+            response => {                
+                dispatch({ type: cardConstants.SUCCESS_UPDATE_CARD_REQUEST })
+                if(response.status === 'CREATED')
+                    dispatch({ type: cardConstants.CARD_UPDATE_STATUS_CREATED, data: response})
+                else
+                    dispatch({ type: cardConstants.CARD_UPDATE_STATUS_PENDING})     
+                
             },
             error => {
                 dispatch({ type: cardConstants.FAILURE_UPDATE_CARD_REQUEST })

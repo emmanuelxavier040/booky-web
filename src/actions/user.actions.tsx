@@ -13,14 +13,14 @@ export const userActions = {
 
 function loginUser(response: any) {
     return (dispatch: any) => {
-        const user = response.profileObj.email
-        dispatch(request(user))
+        const userId = response.profileObj.googleId
+        dispatch(request(userId))
         userService.login(response).then( 
             (response: any) => {
-                dispatch(success(response))
+                dispatch(success(userId))
             },
             (error: any) => {
-                dispatch(failure(user))
+                dispatch(failure(userId))
             })
     }
 

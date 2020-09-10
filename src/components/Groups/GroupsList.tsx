@@ -23,20 +23,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GroupsList(group: IGroupListState) {
-  const classes = useStyles();
+interface GroupListType {
+  groups: IGroupListState,
+  userId: number,
+  mygroups: boolean
+}
 
+
+function GroupsList(props : GroupListType) {
+  const classes = useStyles();
+  let groupList = props.groups.groupList
+  if(props.mygroups) {
+    groupList = props.groups.groupList.filter((group) => { return group.adminIds.includes(props.userId)})
+  }
   return (
     <div>     
       <Container>
-        {group.isloadingGroups && <Box display='flex' justifyContent='center' padding={2}>
+        {props.groups.isloadingGroups && <Box display='flex' justifyContent='center' padding={2}>
           <CircularProgress />
         </Box>      
         }
         <Grid container className={classes.root} spacing={2}>
           <Grid item xs={12}>
             <Grid container justify="center" spacing={3}>
-              {group.groupList.map(
+              {groupList.map(
                 (group) => {
                   const groupProps = {
                     id: group.id,
@@ -44,7 +54,7 @@ function GroupsList(group: IGroupListState) {
                   }
                   return (
                     <Grid key={group.id} item>
-                      <Group {...groupProps} />
+                      <Group group={groupProps} isAdmin={group.adminIds.includes(props.userId)}/>
                     </Grid>
                   )
                 })}

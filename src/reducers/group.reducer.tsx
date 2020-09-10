@@ -5,6 +5,7 @@ export interface IGroupState {
     context: string,
     adminIds: Array<number>
     cardIds: Array<number>
+    cardQueueIds: Array<number>
 }
 
 export interface IGroupListState {

@@ -8,8 +8,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { red } from '@material-ui/core/colors';
+import { BookProps } from './Book';
 
-
+interface BookViewProps {
+  card: BookProps
+  editable: boolean
+  open: boolean
+  setOpen: (value: boolean) => any
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,65 +41,79 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const BookView = (props: any) => { 
-  // Card Id
-  // Short URL
-  // Short Title
-  // Description
-  // Image
-  // Authorized
-  // UserId
-  // Group Id
+const BookView = (props: BookViewProps) => { 
 
+  const [description, setDescription] = React.useState(props.card.card.description+'');
   const classes = useStyles();
 
   const handleClose = () => {
     props.setOpen(false);
+    setDescription(props.card.card.description)
   };
 
-  const handleCreate = () => {
-      handleClose()
+
+  const handleAction = () => {
+    if(props.editable && props.card.card.description !== description)  {      
+      let card2 = {...props.card.card}
+      card2.description = description
+      props.card.updateCard(card2)
+    }
+    handleClose()
   }
 
-  let disabled = true
+  let disabled: boolean = !props.editable
   return (
     <React.Fragment>
       <Dialog open={props.open} onClose={handleClose} aria-labelledby="form-dialog-title" keepMounted={props.open || false} fullWidth={true}>
           <div><br /></div>
 
-        <DialogTitle id="form-dialog-title">{props.title}</DialogTitle>
+        <DialogTitle id="form-dialog-title">{props.card.card.title}</DialogTitle>
         <DialogContent>
             <Avatar aria-label="recipe" className={classes.avatar}>
             </Avatar>
             <div><br /></div>
           <TextField
-            disabled={disabled}
+            disabled={true}
             autoFocus
             margin="dense"
             id="name"
             label="URL"
             type="url"
             fullWidth
-            value={props.url+''}
+            multiline
+            value={props.card.card.url+''}
           /> <div><br /></div>
 
           <TextField
-            disabled={disabled}
+            disabled={true}
             autoFocus
             margin="dense"
             id="name"
             label="Short URL"
             type="url"
             fullWidth
-            value={props.shortUrl+''}
+            value={props.card.card.shortUrl+''}
+          /> <div><br /></div>
+
+          <TextField
+            disabled={disabled}
+            margin="dense"
+            id="description"
+            label="Description"
+            type="text"
+            fullWidth
+            multiline
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            autoComplete={'off'}
           /> <div><br /></div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} size='large' color="default">
             OK
           </Button>
-          <Button onClick={handleCreate} size='large' color="primary">
-            Redirect
+          <Button onClick={handleAction} size='large' color="primary">
+            {props.editable ? 'Update' : 'Redirect'}
           </Button>
         </DialogActions>
         <div><br /></div>
