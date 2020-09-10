@@ -40,7 +40,7 @@ function createNewCard(card: any) {
 
 function updateCard(card: any) {
     const requestOptions = {
-        method: 'PUT',
+        method: 'POST',
         body: JSON.stringify(card)
     }    
     return callAPI(requestOptions, '/cards/'+card.id)

@@ -6,18 +6,22 @@ import { cardActions } from '../actions/card.actions'
 import { groupActions } from '../actions/group.actions';
 
 import { ICardListState } from '../reducers/card.reducer';
+import { IAuthenticationState } from '../reducers/authentication.reducer';
 
 
 interface ICardDispatchState {
     card: ICardListState
-    groupId: number
+    groupId: number,
+    authentication: IAuthenticationState
+
 }
 
 
 const mapStateToProps = (state: IAppReducer, props: any): ICardDispatchState => {
     return {
         card: state.cardList,
-        groupId: props.groupId
+        groupId: props.groupId,
+        authentication: state.authentication
     }
 }
 

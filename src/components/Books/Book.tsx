@@ -14,12 +14,20 @@ import BookView from './BookView';
 import LinkIcon from '@material-ui/icons/Link';
 
 
-interface BookProps {
+interface BookContentProps {
     id: number,
     title: string,
     url: string,
-    shortUrl: string
-    
+    shortUrl: string,
+    description: string,
+    image: string
+}
+
+export interface BookProps {
+    card: BookContentProps
+    updateCard: (value: any) => any
+    groupId: number,
+    isAdmin: boolean
 }
 
 const LightTooltip = withStyles((theme: any) => ({
@@ -56,15 +64,32 @@ const useStyles = makeStyles((theme) => ({
 function Book(props: BookProps) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-
+    const [editable, setEditable] = React.useState(false);
 
     const handleView = () => {
-        setOpen(!open)                
+        setOpen(!open)
+        setEditable(false)
     }
-    
+    const handleEdit = () => {
+        setOpen(!open)
+        setEditable(true)
+    }
+
+    const handleUpdate = (cardProps: any) => {        
+        const updatedCard = { ...cardProps, groupId: props.groupId}      
+        props.updateCard(updatedCard)
+    }
+
     return (
-        <Card className={classes.root}>
-        <BookView open={open} setOpen={setOpen} {...props} />
+        <Card className={classes.root} style={{ backgroundColor: '#F8F8F8' }}>
+            
+            <BookView open={open} setOpen={setOpen} 
+                card={{
+                    card: props.card, 
+                    updateCard: (props: any) => handleUpdate(props), 
+                    groupId: props.groupId, isAdmin: props.isAdmin}} 
+                editable={editable} 
+            />
 
             <CardHeader
                 classes={{
@@ -82,16 +107,17 @@ function Book(props: BookProps) {
                     </IconButton>
                 }
                 title={
-                    <LightTooltip title={props.title == null ? "" : props.title}>
+                    <LightTooltip title={props.card.title == null ? "" : props.card.title}>
                         <Typography noWrap gutterBottom variant="h6" component="h6">
-                            {props.title}
+                            {props.card.title}
                         </Typography>
                     </LightTooltip>
                 }
             />
-            <CardContent>                  
-                    <Button onClick={handleView} color="primary" style={{outline: 'none'}}>View</Button>
-                    <Button  href={'#'} color="secondary">Edit</Button>
+            <CardContent>
+                <Typography noWrap >{props.card.description}</Typography>
+                <Button onClick={handleView} color="primary" style={{ outline: 'none' }}>View</Button>
+                <Button onClick={handleEdit} color="secondary">Edit</Button>
 
             </CardContent>
 
@@ -103,7 +129,7 @@ function Book(props: BookProps) {
                 <IconButton aria-label="share">
                     <LinkIcon />
                 </IconButton>
-                
+
 
             </CardActions>
 
