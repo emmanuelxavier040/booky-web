@@ -16,6 +16,11 @@ interface GroupProps {
     context: string
 }
 
+interface GroupPropsWithUser {
+    group: GroupProps,
+    isAdmin: boolean
+}
+
 const LightTooltip = withStyles((theme: any) => ({
     tooltip: {
         backgroundColor: theme.palette.common.white,
@@ -47,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function Group(props: GroupProps) {
+function Group(props: GroupPropsWithUser) {
     const classes = useStyles();
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} style={{backgroundColor: props.isAdmin?'#CFCFCF':'#F8F8F8'}}>
 
             <CardHeader
                 classes={{
@@ -68,15 +73,15 @@ function Group(props: GroupProps) {
                     </IconButton>
                 }
                 title={
-                    <LightTooltip title={props.context == null ? "" : props.context}>
+                    <LightTooltip title={props.group.context == null ? "" : props.group.context}>
                         <Typography noWrap gutterBottom variant="h6" component="h6">
-                            {props.context}
+                            {props.group.context}
                         </Typography>
                     </LightTooltip>
                 }
             />
             <CardContent>                  
-                    <Button href={'/groups/'.concat(props.id+'')} color="primary">View</Button>
+                    <Button href={'/groups/'.concat(props.group.id+'')} color="primary">View</Button>
                     <Button href={'#'} color="secondary">Edit</Button>
             </CardContent>
 

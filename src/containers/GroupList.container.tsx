@@ -5,16 +5,18 @@ import { IAppReducer } from '../reducers/reducers'
 import { groupActions } from '../actions/group.actions'
 
 import { IGroupListState } from '../reducers/group.reducer';
-
+import { IAuthenticationState } from '../reducers/authentication.reducer';
 
 interface IGroupDispatchState {
     group: IGroupListState
+    authentication: IAuthenticationState
 }
 
 
 const mapStateToProps = (state: IAppReducer, props: any): IGroupDispatchState => {
     return {
-        group: state.groupList
+        group: state.groupList,
+        authentication: state.authentication
     }
 }
 

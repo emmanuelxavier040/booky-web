@@ -9,7 +9,9 @@ export interface ICardState {
     url: string,
     shortUrl: string,
     image: string,
-    groupId: number
+    groupId: number,
+    status: string,
+    description: string
 }
 
 export interface ICardListState {
@@ -27,7 +29,8 @@ const defaultCardListState: ICardListState = {
         id: 0,
         context: '',
         adminIds: [],
-        cardIds: []
+        cardIds: [],
+        cardQueueIds: []
     },
     isloadingCards: false,
     isloadedCards: false,
@@ -38,8 +41,12 @@ const defaultCardListState: ICardListState = {
 }
 
 export const cardListReducer = (state: ICardListState = defaultCardListState, action: any): ICardListState => {    
-    console.log(action)
+    let newList: Array<ICardState> = []
     switch (action.type) {
+
+        case cardConstants.CARD_UPDATE_STATUS_CREATED:
+            newList = state.cardList.map(card => { return card.id !== action.data.id? card : action.data})      
+            return { ...state, cardList: newList}
 
         case groupConstants.SUCCESS_GET_GROUP_REQUEST:
             return { ...state, group: action.data }
@@ -60,11 +67,16 @@ export const cardListReducer = (state: ICardListState = defaultCardListState, ac
             return {...state, isCreatingCard: true, isCreatedCard: false}
 
         case cardConstants.SUCCESS_CREATE_CARD_REQUEST:
-            let newList = []
+            return state            
+        
+        case cardConstants.CARD_CREATION_STATUS_CREATED:
             newList = state.cardList
             newList.push(action.data)
             return {...state, isCreatedCard: true, cardList: newList}
-
+        
+        case cardConstants.CARD_CREATION_STATUS_PENDING:
+            return state        
+            
         case cardConstants.FAILURE_CREATE_CARD_REQUEST:
             return {...state,  isCreatedCard: false}   
 

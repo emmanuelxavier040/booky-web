@@ -40,6 +40,7 @@ export default function BookCreationTemplate(props: any) {
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
   const [url, setUrl] = React.useState('');
+  const [description, setDescription] = React.useState('');
 
   const classes = useStyles();
 
@@ -51,13 +52,14 @@ export default function BookCreationTemplate(props: any) {
     setOpen(false);
     setTitle('')
     setUrl('')
+    setDescription('')
   };
 
   const handleCreate = () => {
-    if (title.length === 0 || url.length === 0) {        
+    if (title.length === 0 || url.length === 0 || description.length === 0) {        
     } else {
 
-      const card = { title, url, groupId: props.groupId }
+      const card = { title, url, description, groupId: props.groupId }
       props.createCard(card)
       handleClose()
     }
@@ -84,24 +86,38 @@ export default function BookCreationTemplate(props: any) {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
+            id="title"
             label="Title"
             type="text"
             fullWidth
+            inputProps={{ maxLength: 35 }}   
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             autoComplete={'off'}
           />
           <div><br /></div>
           <TextField
-            autoFocus
             margin="dense"
-            id="name"
+            id="url"
             label="URL"
             type="url"
             fullWidth
             value={url}
             onChange={(event) => setUrl(event.target.value)}
+            autoComplete={'off'}
+          /> <div><br /></div>
+
+          <TextField
+            margin="dense"
+            id="description"
+            label="Description"
+            type="text"
+            fullWidth
+            rows={4}
+            multiline
+            value={description}
+            inputProps={{ maxLength: 300 }}   
+            onChange={(event) => setDescription(event.target.value)}
             autoComplete={'off'}
           /> <div><br /></div>
 
