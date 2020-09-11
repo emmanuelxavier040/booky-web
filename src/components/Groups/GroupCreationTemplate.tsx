@@ -43,7 +43,7 @@ export default function GroupCreationTemplate(props: any) {
           <CircularProgress />
         </Box>
         }
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" keepMounted={open}>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" keepMounted={open} fullWidth={true}>
         <DialogTitle id="form-dialog-title">Create Group</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -61,6 +61,7 @@ export default function GroupCreationTemplate(props: any) {
             autoComplete={'off'}
           />
         </DialogContent>
+        <br />
         <DialogActions>
           <Button onClick={handleClose} color="secondary">
             Cancel

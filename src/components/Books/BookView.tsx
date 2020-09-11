@@ -53,12 +53,12 @@ const BookView = (props: BookViewProps) => {
 
 
   const handleAction = () => {
-    if(props.editable && props.card.card.description !== description)  {      
+    if(props.editable && props.card.card.description !== description && description !== '')  {      
       let card2 = {...props.card.card}
       card2.description = description
       props.card.updateCard(card2)
+      handleClose()
     }
-    handleClose()
   }
 
   let disabled: boolean = !props.editable
@@ -112,7 +112,7 @@ const BookView = (props: BookViewProps) => {
           <Button onClick={handleClose} size='large' color="default">
             OK
           </Button>
-          <Button onClick={handleAction} size='large' color="primary">
+          <Button onClick={handleAction} size='large' color="primary" >
             {props.editable ? 'Update' : 'Redirect'}
           </Button>
         </DialogActions>

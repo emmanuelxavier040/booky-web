@@ -32,7 +32,7 @@ class GroupsHome extends React.Component<GroupProps, any> {
       <div>
         <section className='jumbotron text-center' >
           <Container>
-            <h1 className="display-3">Create Groups</h1>
+            <h1 className="display-4">Create Groups</h1>
             <hr className="my-2" />
             <p className="lead">You can bookmark with Booky!</p>
           </Container>

@@ -44,7 +44,11 @@ export const cardListReducer = (state: ICardListState = defaultCardListState, ac
     let newList: Array<ICardState> = []
     switch (action.type) {
 
-        case cardConstants.CARD_UPDATE_STATUS_CREATED:
+        case cardConstants.CARD_DELETE_STATUS_DELETED:
+            newList = state.cardList.filter(card => card.id !== action.data)
+            return { ...state, cardList: newList}
+
+        case cardConstants.CARD_UPDATE_STATUS_UPDATED:
             newList = state.cardList.map(card => { return card.id !== action.data.id? card : action.data})      
             return { ...state, cardList: newList}
 
