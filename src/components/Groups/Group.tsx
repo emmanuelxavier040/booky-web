@@ -81,8 +81,8 @@ function Group(props: GroupPropsWithUser) {
                 }
             />
             <CardContent>                  
-                    <Button href={'/groups/'.concat(props.group.id+'')} color="primary">View</Button>
-                    <Button href={'#'} color="secondary">Edit</Button>
+                    <Button href={'/groups/'.concat(props.group.id+'')} color="primary">Enter</Button>
+                    {/* <Button href={'#'} color="secondary" style={{ outline: 'none' }}>Edit</Button> */}
             </CardContent>
 
             <CardActions disableSpacing>

@@ -6,7 +6,8 @@ export const cardActions = {
     updateCard,
     createCard,
     getCard,
-    getAllCardsInGroup
+    getAllCardsInGroup,
+    deleteCard
 }
 
 function createCard(card: any) {
@@ -34,8 +35,8 @@ function updateCard(card: any) {
         cardService.updateCard({ ...card }).then(
             response => {                
                 dispatch({ type: cardConstants.SUCCESS_UPDATE_CARD_REQUEST })
-                if(response.status === 'CREATED')
-                    dispatch({ type: cardConstants.CARD_UPDATE_STATUS_CREATED, data: response})
+                if(response.status === 'UPDATED')
+                    dispatch({ type: cardConstants.CARD_UPDATE_STATUS_UPDATED, data: response})
                 else
                     dispatch({ type: cardConstants.CARD_UPDATE_STATUS_PENDING})     
                 
@@ -45,6 +46,25 @@ function updateCard(card: any) {
             }
         )
         dispatch({ type: cardConstants.UPDATE_CARD_REQUEST_ENDED })
+    }
+}
+
+function deleteCard(id: number) {
+    return (dispatch: any) => {
+        dispatch({ type: cardConstants.DELETE_CARD_REQUEST_STARTED })
+        cardService.deleteCard(id).then(
+            response => {                
+                dispatch({ type: cardConstants.SUCCESS_DELETE_CARD_REQUEST })
+                if(response === 'DELETED')
+                    dispatch({ type: cardConstants.CARD_DELETE_STATUS_DELETED, data: id })
+                else
+                    dispatch({ type: cardConstants.CARD_DELETE_STATUS_PENDING})                
+            },
+            error => {
+                dispatch({ type: cardConstants.FAILURE_DELETE_CARD_REQUEST })
+            }
+        )
+        dispatch({ type: cardConstants.DELETE_CARD_REQUEST_ENDED })
     }
 }
 
