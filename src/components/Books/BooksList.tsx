@@ -12,13 +12,14 @@ interface BookListProps {
 
   card: ICardListState,
   updateCard: (value: any) => any
+  deleteCard: (id: number) => any
   groupId: number,
   isAdmin: boolean
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,  
+    flexGrow: 1, 
   },
   paper: {
     height: 140,
@@ -54,9 +55,16 @@ function BooksList(props: BookListProps) {
                     description: card.description,
                     image: card.image
                   }
+                  const bookProps = {
+                    card: cardProps,
+                    updateCard: props.updateCard,
+                    groupId: props.groupId,
+                    isAdmin: props.isAdmin,
+                    deleteCard: props.deleteCard
+                  }
                   return (
                     <Grid key={card.id} item>
-                      <Book card={cardProps} updateCard={props.updateCard} groupId={props.groupId} isAdmin={props.isAdmin}/>
+                      <Book {...bookProps}/>
                     </Grid>
                   )
                 })}

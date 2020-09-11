@@ -5,8 +5,8 @@ export const cardService = {
     getOneCard,
     createNewCard,
     updateCard,
-    getAllCardsInGroup
-    
+    getAllCardsInGroup,
+    deleteCard    
 }
 
 function callAPI(requestOptions: any, path: any) {
@@ -44,6 +44,13 @@ function updateCard(card: any) {
         body: JSON.stringify(card)
     }    
     return callAPI(requestOptions, '/cards/'+card.id)
+}
+
+function deleteCard(id: number) {
+    const requestOptions = {
+        method: 'DELETE',
+    }    
+    return callAPI(requestOptions, '/cards/'+id)
 }
 
 function getAllCardsInGroup(id: number) {
