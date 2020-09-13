@@ -4,9 +4,8 @@ import BooksList from './BooksList';
 import BookCreationTemplate from './BookCreationTemplate';
 import connect, { CardProps } from '../../containers/CardList.container';
 import Box from '@material-ui/core/Box';
-import GroupActions from './BooksHomeActions'
 
-
+import EditTabs from './BookHomeActionsScreen';
 
 class BooksHome extends React.Component<CardProps, any> {
 
@@ -27,6 +26,12 @@ class BooksHome extends React.Component<CardProps, any> {
 
   render() {
     const isAdmin = this.props.card.group.adminIds.includes(this.props.authentication.userId)
+    const editTabProps = {
+      queue: this.props.card.cardQueueList,
+      getQueue: () => this.props.getAllCardsInQueue(this.props.groupId),
+      approveCard: this.props.approveCardInQueue,
+      rejectCard: this.props.rejectCardInQueue
+    }
     return (
       <div>
         <Container>
@@ -41,31 +46,23 @@ class BooksHome extends React.Component<CardProps, any> {
                     createCard={this.handleCreate} 
                     showloading={false} 
                     groupId={this.props.groupId} />
-              </Box>              
+              </Box>      
+              {isAdmin && 
+              <Box p={1}>
+                <EditTabs  {...editTabProps}/>
+              </Box>    
+              }    
             </Box>
           </Container>
           <p />
           <p />
         </Container>
-        <Box  display="flex" flexDirection="row">
-          <Box p={1} width={250} 
-                alignItems='center' 
-                display='flex'
-                height={80} 
-                justifyContent="center"
-
-          >
-              <GroupActions />
-          </Box>
-          <Box p={4}>
-              <BookDashboard card={this.props.card} 
-              updateCard={this.props.updateCard} 
-              groupId={this.props.groupId} 
-              isAdmin={isAdmin}
-              deleteCard={this.props.deleteCard}        
-              />
-          </Box>                  
-        </Box>
+        <BookDashboard card={this.props.card} 
+        updateCard={this.props.updateCard} 
+        groupId={this.props.groupId} 
+        isAdmin={isAdmin}
+        deleteCard={this.props.deleteCard}        
+        />
       </div>
     );
   }

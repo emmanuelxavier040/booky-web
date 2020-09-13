@@ -17,7 +17,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-interface BookContentProps {
+export interface BookContentProps {
     id: number,
     title: string,
     url: string,
@@ -96,7 +96,7 @@ function Book(props: BookProps) {
     return (
         <Card className={classes.root} style={{ backgroundColor: '#F8F8F8' }}>
 
-            <BookView open={open} setOpen={setOpen}
+            {open && <BookView open={open} setOpen={setOpen}
                 card={{
                     card: props.card,
                     updateCard: (props: any) => handleUpdate(props),
@@ -104,7 +104,7 @@ function Book(props: BookProps) {
                     deleteCard: () => {}
                 }}
                 editable={editable}
-            />
+            />}
 
             <CardHeader
                 classes={{
