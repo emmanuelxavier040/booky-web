@@ -6,7 +6,10 @@ export const cardService = {
     createNewCard,
     updateCard,
     getAllCardsInGroup,
-    deleteCard    
+    deleteCard,
+    getAllCardsInQueue,
+    approveCardInQueue,
+    rejectCardInQueue
 }
 
 function callAPI(requestOptions: any, path: any) {
@@ -58,4 +61,26 @@ function getAllCardsInGroup(id: number) {
         method: 'GET'
     }    
     return callAPI(requestOptions, '/groups/'+id+'/cards')
+}
+
+function getAllCardsInQueue(id: number) {
+    const requestOptions = {
+        method: 'GET'
+    }    
+    return callAPI(requestOptions, '/queue/group/'+id)
+}
+
+function approveCardInQueue(id: number) {
+    const requestOptions = {
+        method: 'POST'
+    }    
+    return callAPI(requestOptions, '/queue/'+id)
+}
+
+
+function rejectCardInQueue(id: number) {
+    const requestOptions = {
+        method: 'DELETE'
+    }    
+    return callAPI(requestOptions, '/queue/'+id)
 }
