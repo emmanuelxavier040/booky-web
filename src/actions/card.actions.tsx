@@ -7,7 +7,10 @@ export const cardActions = {
     createCard,
     getCard,
     getAllCardsInGroup,
-    deleteCard
+    deleteCard,
+    getAllCardsInQueue,
+    approveCardInQueue,
+    rejectCardInQueue
 }
 
 function createCard(card: any) {
@@ -98,4 +101,50 @@ function getAllCardsInGroup(id: number) {
         dispatch({ type: cardConstants.GET_CARDS_REQUEST_ENDED })
     }
 
+}
+
+function getAllCardsInQueue(id: number) {
+    return (dispatch: any) => {
+        dispatch({ type: cardConstants.GET_CARDS_IN_QUEUE_REQUEST_STARTED })
+        cardService.getAllCardsInQueue(id).then(
+            response => {                
+                dispatch({ type: cardConstants.SUCCESS_GET_CARDS_IN_QUEUE_REQUEST, data: response })
+            },
+            error => {
+                dispatch({ type: cardConstants.FAILURE_GET_CARDS_IN_QUEUE_REQUEST })
+            }
+        )
+        dispatch({ type: cardConstants.GET_CARDS_IN_QUEUE_REQUEST_ENDED })
+    }
+
+}
+
+function approveCardInQueue(id: number) {
+    return (dispatch: any) => {
+        dispatch({ type: cardConstants.APPROVE_CARD_IN_QUEUE_REQUEST_STARTED })
+        cardService.approveCardInQueue(id).then(
+            response => {                
+                dispatch({ type: cardConstants.SUCCESS_APPROVE_CARD_IN_QUEUE_REQUEST, data: id })
+               },
+            error => {
+                dispatch({ type: cardConstants.FAILURE_APPROVE_CARD_IN_QUEUE_REQUEST })
+            }
+        )
+        dispatch({ type: cardConstants.APPROVE_CARD_IN_QUEUE_REQUEST_ENDED })
+    }
+}
+
+function rejectCardInQueue(id: number) {
+    return (dispatch: any) => {
+        dispatch({ type: cardConstants.REJECT_CARD_IN_QUEUE_REQUEST_STARTED })
+        cardService.rejectCardInQueue(id).then(
+            response => {                
+                dispatch({ type: cardConstants.SUCCESS_REJECT_CARD_IN_QUEUE_REQUEST, data: id })
+               },
+            error => {
+                dispatch({ type: cardConstants.FAILURE_REJECT_CARD_IN_QUEUE_REQUEST })
+            }
+        )
+        dispatch({ type: cardConstants.REJECT_CARD_IN_QUEUE_REQUEST_ENDED })
+    }
 }

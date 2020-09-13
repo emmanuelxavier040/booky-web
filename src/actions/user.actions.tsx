@@ -39,7 +39,6 @@ function loginUser(response: any) {
 
 function logoutUser() {
     return (dispatch: any) => {
-        console.log('logging out')
         // dispatch({ type: userConstants.LOGOUT_REQUEST })
         userService.logout();
         // dispatch({ type: userConstants.LOGOUT_SUCCESS })

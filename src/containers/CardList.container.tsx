@@ -32,6 +32,9 @@ interface ICardDispatchToProps {
     getAllCardsInGroup: (groupId: number) => any
     getGroup: (id: number) => any
     deleteCard: (id: number) => any
+    getAllCardsInQueue: (id: number) => any
+    approveCardInQueue: (id: number) => any
+    rejectCardInQueue: (id: number) => any
 }
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<IAppReducer, any, any>): ICardDispatchToProps => ({
@@ -40,7 +43,10 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<IAppReducer, any, any>): ICa
     updateCard: card => cardActions.updateCard(card)(dispatch),
     getAllCardsInGroup: id => cardActions.getAllCardsInGroup(id)(dispatch),
     getGroup: id => groupActions.getGroup(id)(dispatch),
-    deleteCard: id => cardActions.deleteCard(id)(dispatch)
+    deleteCard: id => cardActions.deleteCard(id)(dispatch),
+    getAllCardsInQueue: id => cardActions.getAllCardsInQueue(id)(dispatch),
+    approveCardInQueue: id => cardActions.approveCardInQueue(id)(dispatch),
+    rejectCardInQueue: id => cardActions.rejectCardInQueue(id)(dispatch)
 })
 
 export type CardProps = ICardDispatchState & ICardDispatchToProps

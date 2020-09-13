@@ -10,9 +10,8 @@ import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
-import AddIcon from '@material-ui/icons/Add';
-
-
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
+import AddPhotoAlternateOutlinedIcon from '@material-ui/icons/AddPhotoAlternateOutlined';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,7 +60,7 @@ export default function BookCreationTemplate(props: any) {
   }
   return (
     <div>
-      <Button variant="outlined" size='large' color="primary" onClick={handleClickOpen}>
+      <Button variant="outlined" size='large' color="primary" onClick={handleClickOpen} startIcon={<AddOutlinedIcon />}>
         Create Book
       </Button>    {props.showLoading && <Box display='flex' justifyContent='center' padding={2}>
         <CircularProgress />
@@ -73,7 +72,7 @@ export default function BookCreationTemplate(props: any) {
         <DialogContent>
           <Button component="label">
             <Avatar aria-label="recipe" className={classes.avatar}>
-              <AddIcon />
+              <AddPhotoAlternateOutlinedIcon />
             </Avatar>
             <input type="file" style={{ display: "none" }}/>
           </Button>
