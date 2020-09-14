@@ -4,7 +4,8 @@ import { apiService } from './api.service'
 export const userService = {
     login,
     authenticateToken,
-    logout
+    logout,
+    getMatchingUsers
 }
 
 
@@ -50,4 +51,25 @@ function authenticateToken() {
 function logout() {
     localStorage.removeItem('google_token')
     localStorage.removeItem('jwt_authorization')
+}
+
+function callAPI(requestOptions: any, path: any) {
+    const response = apiService.apiCall(path, requestOptions)
+    response
+        .then(
+            (response: any) => {
+                return response
+            },
+            (error: any) => {
+                return Promise.reject(error)
+            }
+        )
+    return response
+}
+
+function getMatchingUsers(match: string) {
+    const requestOptions = {
+        method: 'GET'
+    }         
+    return callAPI(requestOptions, '/users/'+match)
 }
