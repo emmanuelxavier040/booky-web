@@ -4,7 +4,10 @@ import { apiService } from './api.service'
 export const groupService = {
     getOneGroup,
     createNewGroup,   
-    getMyGroups
+    getMyGroups,
+    getAdminUsersOfGroup,
+    addAdminForGroup,
+    removeAdminFromGroup
 }
 
 function callAPI(requestOptions: any, path: any) {
@@ -42,4 +45,27 @@ function getMyGroups() {
         method: 'GET',
     }
     return callAPI(requestOptions, '/groups')
+}
+
+function getAdminUsersOfGroup(id: number) {
+    const requestOptions = {
+        method: 'GET'
+    }
+    return callAPI(requestOptions, '/groups/'+id+'/admins')
+}
+
+function addAdminForGroup(id: number, user: any) {
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify(user)
+    }
+    return callAPI(requestOptions, '/groups/'+id+'/admins')
+}
+
+function removeAdminFromGroup(id: number, user: any) {
+    const requestOptions = {
+        method: 'DELETE',
+        body: JSON.stringify(user)
+    }
+    return callAPI(requestOptions, '/groups/'+id+'/admins')
 }

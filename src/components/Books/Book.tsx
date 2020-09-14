@@ -157,7 +157,7 @@ export function AlertDialog(props: any) {
         <div>
             <Dialog
                 open={props.open}
-                onClose={() => { props.delete(true) }}
+                onClose={() => { props.delete(false) }}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >   <br/>
