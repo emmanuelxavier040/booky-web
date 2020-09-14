@@ -42,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 const BookView = (props: BookViewProps) => { 
+  const serviceUrl = process.env.REACT_APP_SERVICE_URL || 'http://localhost:8080/api/v1'
+  const redirectUrl = serviceUrl.replace('/api/v1', '').concat('/r/').concat(props.card.card.shortUrl)
 
   const [description, setDescription] = React.useState(props.card.card.description+'');
   const classes = useStyles();
@@ -58,10 +60,14 @@ const BookView = (props: BookViewProps) => {
       card2.description = description
       props.card.updateCard(card2)
       handleClose()
+    } else {      
+      window.open(redirectUrl, '_blank');
+      handleClose()
     }
   }
 
   let disabled: boolean = !props.editable
+  
   return (
     <React.Fragment>
       <Dialog open={props.open} onClose={handleClose} aria-labelledby="form-dialog-title" keepMounted={props.open || false} fullWidth={true}>
@@ -92,7 +98,7 @@ const BookView = (props: BookViewProps) => {
             label="Short URL"
             type="url"
             fullWidth
-            value={props.card.card.shortUrl+''}
+            value={redirectUrl}
           /> <div><br /></div>
 
           <TextField

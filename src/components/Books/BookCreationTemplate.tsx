@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import AddPhotoAlternateOutlinedIcon from '@material-ui/icons/AddPhotoAlternateOutlined';
+import valid from 'valid-url';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +36,11 @@ export default function BookCreationTemplate(props: any) {
   const [title, setTitle] = React.useState('');
   const [url, setUrl] = React.useState('');
   const [description, setDescription] = React.useState('');
-
+  
+  const [titleErrorMessage, setTitleErrorMessage] = React.useState('');
+  const [descriptionErrorMessage, setDescriptionErrorMessage] = React.useState('');
+  const [urlErrorMessage, setUrlErrorMessage] = React.useState('');
+  
   const classes = useStyles();
 
   const handleClickOpen = () => {
@@ -46,12 +52,18 @@ export default function BookCreationTemplate(props: any) {
     setTitle('')
     setUrl('')
     setDescription('')
+    setUrlErrorMessage('')
+    setTitleErrorMessage('')
+    setDescriptionErrorMessage('')    
   };
 
   const handleCreate = () => {
-    if (title.length === 0 || url.length === 0 || description.length === 0) {        
-    } else {
-
+    let ready = true;
+    if (title.length === 0) { setTitleErrorMessage('Required'); ready = false } 
+    if(description.length === 0) { setDescriptionErrorMessage('Required'); ready = false} 
+    if(url.length === 0){ setUrlErrorMessage('Required'); ready = false } 
+    if(!valid.isHttpUri(url) && !valid.isHttpsUri(url)) { setUrlErrorMessage('Invalid url'); ready = false} 
+    if(ready) {
       const card = { title, url, description, groupId: props.groupId }
       props.createCard(card)
       handleClose()
@@ -85,7 +97,9 @@ export default function BookCreationTemplate(props: any) {
             fullWidth
             inputProps={{ maxLength: 35 }}   
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            error={titleErrorMessage.length > 0}
+            helperText={titleErrorMessage}
+            onChange={(event) => {setTitleErrorMessage(''); setTitle(event.target.value)}}
             autoComplete={'off'}
           />
           <div><br /></div>
@@ -96,9 +110,11 @@ export default function BookCreationTemplate(props: any) {
             type="url"
             fullWidth
             value={url}
-            onChange={(event) => setUrl(event.target.value)}
+            error={urlErrorMessage.length > 0}
+            helperText={urlErrorMessage}
+            onChange={(event) => {setUrlErrorMessage(''); setUrl(event.target.value)}}
             autoComplete={'off'}
-          /> <div><br /></div>
+          /><div><br /></div>
 
           <TextField
             margin="dense"
@@ -110,7 +126,9 @@ export default function BookCreationTemplate(props: any) {
             multiline
             value={description}
             inputProps={{ maxLength: 300 }}   
-            onChange={(event) => setDescription(event.target.value)}
+            error={descriptionErrorMessage.length > 0}
+            helperText={descriptionErrorMessage}
+            onChange={(event) => {setDescriptionErrorMessage(''); setDescription(event.target.value)}}
             autoComplete={'off'}
           /> <div><br /></div>
 
