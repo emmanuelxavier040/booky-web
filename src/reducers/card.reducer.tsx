@@ -58,18 +58,6 @@ const defaultCardListState: ICardListState = {
 }
 
 
-function createCardObjectFromQueueCard(cardQueue: ICardQueueState): ICardState {
-    return {
-        id: cardQueue.cardId,
-        title: cardQueue.title,
-        url: cardQueue.url,
-        shortUrl: cardQueue.shortUrl,
-        image: cardQueue.image,
-        groupId: cardQueue.groupId,
-        status: cardQueue.status,
-        description: cardQueue.description
-    }
-}
 
 export const cardListReducer = (state: ICardListState = defaultCardListState, action: any): ICardListState => {    
     let newList: Array<ICardState> = []
@@ -97,14 +85,14 @@ export const cardListReducer = (state: ICardListState = defaultCardListState, ac
             return { ...state, cardQueueList: newQueueList}
 
         case cardConstants.SUCCESS_APPROVE_CARD_IN_QUEUE_REQUEST:
-            const approvedCard: ICardQueueState = state.cardQueueList.filter(card => card.id === action.data)[0]
-            newQueueList = state.cardQueueList.filter(card => card.id !== action.data)            
+            const approvedCard: ICardQueueState = state.cardQueueList.filter(card => card.id === action.data.queueCardId)[0]
+            newQueueList = state.cardQueueList.filter(card => card.id !== action.data.queueCardId)            
             newList = state.cardList            
             
             if(approvedCard.status === "PENDING_FOR_CREATION")
-                newList.push(createCardObjectFromQueueCard(approvedCard))            
+                newList.push(action.data.response)            
             else if(approvedCard.status === "PENDING_FOR_UPDATE")
-                newList = state.cardList.map(card => { return card.id !== approvedCard.cardId? card : createCardObjectFromQueueCard(approvedCard)})
+                newList = state.cardList.map(card => { return card.id !== approvedCard.cardId? card : action.data.response})
 
             return { ...state, cardQueueList:  newQueueList,  isCreatedCard: true, cardList: newList }
 
