@@ -11,13 +11,21 @@ import Dialog from '@material-ui/core/Dialog';
 import SupervisorAccountOutlinedIcon from '@material-ui/icons/SupervisorAccountOutlined';
 import { ICardQueueState } from '../../reducers/card.reducer';
 import Badge from '@material-ui/core/Badge';
-
+import AdminOperations from './AdminOperationScreen';
+import { IUserState } from '../../reducers/card.reducer';
 
 interface EditTabProps {
   queue: Array<ICardQueueState>
   getQueue: () => any
   approveCard: (id: number) => any
   rejectCard: (id: number) => any
+  getAdminUsersOfGroup: () => any
+  getMatchingUsers: (match: string) => any
+  adminList: Array<IUserState>
+  usersList: Array<IUserState>,
+  addAdminForGroup: (id: number, user: IUserState) => any
+  removeAdminFromGroup: (id: number, user: IUserState) => any
+  groupId: number
 }
 
 function TabPanel(props: any) {
@@ -84,9 +92,20 @@ export default function EditTabs(props: EditTabProps) {
   const getQueue = () => {props.getQueue()};
   React.useEffect(() => { 
       getQueue() 
+      props.getAdminUsersOfGroup()
   
     // eslint-disable-next-line 
   }, [ check ]);
+
+  const adminOperationsProps = {
+    groupId: props.groupId,
+    usersList: props.usersList,
+    adminList: props.adminList,
+    getAdmins: props.getAdminUsersOfGroup,
+    getMatchingUsers: props.getMatchingUsers,
+    addAdminForGroup: props.addAdminForGroup,
+    removeAdminFromGroup: props.removeAdminFromGroup
+  }
 
   return (
     <React.Fragment>
@@ -110,7 +129,7 @@ export default function EditTabs(props: EditTabProps) {
             <BookUpdatesList cardQueueList={props.queue} approveCard={props.approveCard} rejectCard={props.rejectCard}/>
           </TabPanel>
           <TabPanel value={value} index={1}>
-
+              <AdminOperations {...adminOperationsProps} />
           </TabPanel>
         </div>
       </Dialog>

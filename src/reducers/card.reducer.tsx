@@ -1,5 +1,6 @@
 import { cardConstants } from '../constants/CardConstants';
 import { groupConstants } from '../constants/GroupConstants';
+import { userConstants } from '../constants/UserConstants';
 
 import { IGroupState } from '../reducers/group.reducer';
 
@@ -18,6 +19,13 @@ export interface ICardQueueState extends ICardState {
     cardId: number
 }
 
+export interface IUserState {
+    userId: number,
+    email: string,
+    firstName: string, 
+    lastName: string
+}
+
 export interface ICardListState {
     group: IGroupState,
     isloadingCards: boolean,
@@ -26,6 +34,8 @@ export interface ICardListState {
     isCreatingCard: boolean,
     isCreatedCard: boolean,
     cardQueueList: Array<ICardQueueState>
+    adminsList: Array<IUserState>
+    usersList: Array<IUserState>
 }
 
 
@@ -41,7 +51,9 @@ const defaultCardListState: ICardListState = {
     cardList: [],
     isCreatingCard: false,
     isCreatedCard: true,
-    cardQueueList: []
+    cardQueueList: [],
+    adminsList: [],
+    usersList: []
 
 }
 
@@ -62,7 +74,23 @@ function createCardObjectFromQueueCard(cardQueue: ICardQueueState): ICardState {
 export const cardListReducer = (state: ICardListState = defaultCardListState, action: any): ICardListState => {    
     let newList: Array<ICardState> = []
     let newQueueList: Array<ICardQueueState> = []
+    let newUserList: Array<IUserState> = []
     switch (action.type) {
+
+        case groupConstants.SUCCESS_REMOVE_GROUP_ADMIN_REQUEST:
+            newUserList = state.adminsList.filter(admin => admin.userId !== action.data.userId)
+            return { ...state, adminsList: newUserList }
+
+        case groupConstants.SUCCESS_ADD_GROUP_ADMIN_REQUEST:
+            newUserList = state.adminsList
+            newUserList.push(action.data)
+            return { ...state, adminsList: newUserList }
+
+        case userConstants.SUCCESS_GET_MATCHING_USERS_REQUEST:
+            return { ...state, usersList: action.data}
+
+        case groupConstants.SUCCESS_GET_GROUP_ADMINS_REQUEST:
+            return { ...state, adminsList: action.data }
 
         case cardConstants.SUCCESS_REJECT_CARD_IN_QUEUE_REQUEST:
             newQueueList = state.cardQueueList.filter(card => card.id !== action.data)

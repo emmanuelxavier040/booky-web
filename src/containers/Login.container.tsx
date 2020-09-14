@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { ThunkDispatch } from "redux-thunk";
 import { IAppReducer } from '../reducers/reducers'
-import { UserActionType, userActions } from '../actions/user.actions'
+import { userActions } from '../actions/user.actions'
 import { IAuthenticationState } from '../reducers/authentication.reducer';
 
 
@@ -10,7 +10,10 @@ interface ILoginStateProps {
 }
 
 interface ILoginDispatchProps {
-    userActions: UserActionType
+    userActions: {
+        loginUser: (value: any) => any
+        logoutUser: () => any
+    }
 }
 
 export type LoginProps = ILoginStateProps & ILoginDispatchProps

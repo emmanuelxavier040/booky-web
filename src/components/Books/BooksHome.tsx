@@ -30,13 +30,20 @@ class BooksHome extends React.Component<CardProps, any> {
       queue: this.props.card.cardQueueList,
       getQueue: () => this.props.getAllCardsInQueue(this.props.groupId),
       approveCard: this.props.approveCardInQueue,
-      rejectCard: this.props.rejectCardInQueue
+      rejectCard: this.props.rejectCardInQueue,
+      getAdminUsersOfGroup: () => {this.props.getAdminUsersOfGroup(this.props.groupId)},
+      getMatchingUsers: this.props.getMatchingUsers,
+      adminList: this.props.card.adminsList,
+      usersList: this.props.card.usersList,
+      addAdminForGroup: this.props.addAdminForGroup,
+      removeAdminFromGroup: this.props.removeAdminFromGroup,
+      groupId: this.props.groupId
     }
     return (
       <div>
         <Container>
           <br /><br />
-          <h1 className="display-3">Books in {this.props.card.group.context}</h1>
+          <em>Books in</em><h1 className="display-3">{this.props.card.group.context}</h1>
           <hr className="my-2" />
           <p className="lead">You can bookmark with Booky!</p>
           <Container>

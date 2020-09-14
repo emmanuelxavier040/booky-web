@@ -4,8 +4,9 @@ import { ThunkDispatch } from "redux-thunk";
 import { IAppReducer } from '../reducers/reducers'
 import { cardActions } from '../actions/card.actions'
 import { groupActions } from '../actions/group.actions';
+import { userActions } from '../actions/user.actions';
 
-import { ICardListState } from '../reducers/card.reducer';
+import { ICardListState, IUserState } from '../reducers/card.reducer';
 import { IAuthenticationState } from '../reducers/authentication.reducer';
 
 
@@ -35,6 +36,10 @@ interface ICardDispatchToProps {
     getAllCardsInQueue: (id: number) => any
     approveCardInQueue: (id: number) => any
     rejectCardInQueue: (id: number) => any
+    getMatchingUsers: (match: string) => any
+    getAdminUsersOfGroup: (id: number) => any
+    addAdminForGroup: (id: number, user: IUserState) => any
+    removeAdminFromGroup: (id: number, user: IUserState) => any
 }
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<IAppReducer, any, any>): ICardDispatchToProps => ({
@@ -46,7 +51,12 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<IAppReducer, any, any>): ICa
     deleteCard: id => cardActions.deleteCard(id)(dispatch),
     getAllCardsInQueue: id => cardActions.getAllCardsInQueue(id)(dispatch),
     approveCardInQueue: id => cardActions.approveCardInQueue(id)(dispatch),
-    rejectCardInQueue: id => cardActions.rejectCardInQueue(id)(dispatch)
+    rejectCardInQueue: id => cardActions.rejectCardInQueue(id)(dispatch),
+    getMatchingUsers: match => userActions.getMatchingUsers(match)(dispatch),
+    getAdminUsersOfGroup: id => groupActions.getAdminUsersOfGroup(id)(dispatch),
+    addAdminForGroup: (id, user) => groupActions.addAdminForGroup(id, user)(dispatch),
+    removeAdminFromGroup: (id, user) => groupActions.removeAdminFromGroup(id, user)(dispatch)
+
 })
 
 export type CardProps = ICardDispatchState & ICardDispatchToProps

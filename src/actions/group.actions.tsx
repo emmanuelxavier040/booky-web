@@ -6,7 +6,10 @@ export const groupActions = {
     updateGroupTitle,
     createGroup,
     getGroup,
-    getMyGroups
+    getMyGroups,
+    getAdminUsersOfGroup,
+    addAdminForGroup,
+    removeAdminFromGroup
 }
 
 
@@ -59,4 +62,51 @@ function getMyGroups() {
         dispatch({ type: groupConstants.GET_GROUPS_REQUEST_ENDED })
     }
 
+}
+
+function getAdminUsersOfGroup(id: number) {
+    return (dispatch: any) => {
+        dispatch({ type: groupConstants.GET_GROUP_ADMINS_REQUEST_STARTED })
+        groupService.getAdminUsersOfGroup(id).then(
+            response => {
+                dispatch({ type: groupConstants.SUCCESS_GET_GROUP_ADMINS_REQUEST, data: response })
+            },
+            error => {
+                dispatch({ type: groupConstants.FAILURE_GET_GROUP_ADMINS_REQUEST })
+            }
+        )
+        dispatch({ type: groupConstants.GET_GROUP_ADMINS_REQUEST_ENDED })
+    }
+
+}
+
+
+function addAdminForGroup(id: number, user: any) {
+    return (dispatch: any) => {
+        dispatch({ type: groupConstants.ADD_GROUP_ADMIN_REQUEST_STARTED })
+        groupService.addAdminForGroup(id, user).then(
+            response => {
+                dispatch({ type: groupConstants.SUCCESS_ADD_GROUP_ADMIN_REQUEST, data: user})
+            },
+            error => {
+                dispatch({ type: groupConstants.FAILURE_ADD_GROUP_ADMIN_REQUEST })
+            }
+        )
+        dispatch({ type: groupConstants.ADD_GROUP_ADMIN_REQUEST_ENDED })
+    }
+}
+
+function removeAdminFromGroup(id: number, user: any) {
+    return (dispatch: any) => {
+        dispatch({ type: groupConstants.REMOVE_GROUP_ADMIN_REQUEST_STARTED })
+        groupService.removeAdminFromGroup(id, user).then(
+            response => {
+                dispatch({ type: groupConstants.SUCCESS_REMOVE_GROUP_ADMIN_REQUEST, data: user})
+            },
+            error => {
+                dispatch({ type: groupConstants.FAILURE_REMOVE_GROUP_ADMIN_REQUEST })
+            }
+        )
+        dispatch({ type: groupConstants.REMOVE_GROUP_ADMIN_REQUEST_ENDED })
+    }
 }
