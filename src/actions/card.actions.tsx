@@ -124,7 +124,7 @@ function approveCardInQueue(id: number) {
         dispatch({ type: cardConstants.APPROVE_CARD_IN_QUEUE_REQUEST_STARTED })
         cardService.approveCardInQueue(id).then(
             response => {                
-                dispatch({ type: cardConstants.SUCCESS_APPROVE_CARD_IN_QUEUE_REQUEST, data: id })
+                dispatch({ type: cardConstants.SUCCESS_APPROVE_CARD_IN_QUEUE_REQUEST, data: {queueCardId: id, response} })
                },
             error => {
                 dispatch({ type: cardConstants.FAILURE_APPROVE_CARD_IN_QUEUE_REQUEST })
