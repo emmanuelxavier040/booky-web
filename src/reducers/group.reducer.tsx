@@ -7,26 +7,46 @@ export interface IGroupState {
     cardIds: Array<number>
 }
 
+export interface IShortUrlState {
+    shortUrl: string,
+    url: string,
+    expiryDate: Date,
+    creationTime: Date
+}
+
 export interface IGroupListState {
     isloadingGroups: boolean,
     isloadedGroups: boolean,
     groupList: Array<IGroupState>
     isCreatingGroup: boolean,
-    isCreatedGroup: boolean
+    isCreatedGroup: boolean,
+    urlState: IShortUrlState
 }
 
+const initialUrlState: IShortUrlState = {
+    shortUrl: '',
+    url: '',
+    expiryDate: new Date(),
+    creationTime: new Date()
+}
 
 const defaultGroupListState: IGroupListState = {   
     isloadingGroups: true,
     isloadedGroups: false,
     groupList: [],
     isCreatingGroup: false,
-    isCreatedGroup: true
-
+    isCreatedGroup: true,
+    urlState : initialUrlState
 }
 
 export const groupListReducer = (state: IGroupListState = defaultGroupListState, action: any): IGroupListState => {    
     switch (action.type) {
+
+        case groupConstants.CLEAR_SHORTURL_STATE:
+            return { ...state, urlState: initialUrlState }
+
+        case groupConstants.SUCCESS_CREATE_SHORTURL_REQUEST:
+            return { ...state, urlState: action.data }
 
         case groupConstants.GET_GROUPS_REQUEST_STARTED:
             return {...state, isloadingGroups:true, isloadedGroups: false}
