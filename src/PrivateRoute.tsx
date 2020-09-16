@@ -4,7 +4,7 @@ import { store } from '.'
 
 import { userService } from './services/user.service'
 import { userConstants } from './constants/UserConstants'
-import Home from './components/Home/Home';
+import GroupsHome from './components/Groups/GroupsHome';
 import Login from './components/Login/Login';
 const jwt_decode = require("jwt-decode")
 
@@ -58,7 +58,7 @@ class AuthComponent extends React.Component<any, any> {
                 store.dispatch({ type: userConstants.TOKEN_AUTH_SUCCESS, userId})
                 let render = this.props.renderComponent
                 if (this.props.path === '/login') {                   
-                    render = Home
+                    render = GroupsHome
                 }
                 this.setState({
                     isauthenticated: true,

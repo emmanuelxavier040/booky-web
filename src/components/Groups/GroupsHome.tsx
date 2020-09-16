@@ -7,6 +7,8 @@ import connect, { GroupProps } from '../../containers/GroupList.container';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Box from '@material-ui/core/Box';
+import TempBookCreationTemplate from './TemporaryBookCreationTemplate';
 
 class GroupsHome extends React.Component<GroupProps, any> {
 
@@ -26,17 +28,23 @@ class GroupsHome extends React.Component<GroupProps, any> {
 
   render() {
 
-    const showLoading = this.props.group.isCreatingGroup && !this.props.group.isCreatedGroup
-
     return (
       <div>
-        <section className='jumbotron text-center' >
+        <section className='jumbotron text-center' style={{ padding: 'em'}}>
           <Container>
-            <h1 className="display-4">Create Groups</h1>
+            <h1 className="display-3">Booky</h1>
             <hr className="my-2" />
             <p className="lead">You can bookmark with Booky!</p>
           </Container>
-          <GroupCreationTemplate createGroup={this.handleCreate} showloading={showLoading} />
+          <Box display="flex" flexDirection="row" p={1} m={1} justifyContent={'center'}>
+              <Box p={1}>
+                <TempBookCreationTemplate clearUrlState={this.props.clearUrlState}
+                shortUrl={this.props.group.urlState} createShortUrl={this.props.createShortUrlWithExpiry}/>
+              </Box>                    
+              <Box p={1}>
+                <GroupCreationTemplate createGroup={this.handleCreate} />
+              </Box>              
+          </Box>          
         </section>
         <GroupDashBoard group={this.props.group} userId={this.props.authentication.userId} />
       </div>

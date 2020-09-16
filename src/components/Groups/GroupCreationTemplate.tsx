@@ -6,8 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Box from '@material-ui/core/Box';
 
 
 export default function GroupCreationTemplate(props: any) {
@@ -39,10 +37,7 @@ export default function GroupCreationTemplate(props: any) {
     <div>
       <Button variant="outlined" size='large' color="primary" onClick={handleClickOpen}>
         Create Group
-      </Button>    { props.showLoading && <Box display='flex' justifyContent='center' padding={2}>
-          <CircularProgress />
-        </Box>
-        }
+      </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" keepMounted={open} fullWidth={true}>
         <DialogTitle id="form-dialog-title">Create Group</DialogTitle>
         <DialogContent>

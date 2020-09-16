@@ -7,7 +7,8 @@ export const groupService = {
     getMyGroups,
     getAdminUsersOfGroup,
     addAdminForGroup,
-    removeAdminFromGroup
+    removeAdminFromGroup,
+    createShortUrlWithExpiry
 }
 
 function callAPI(requestOptions: any, path: any) {
@@ -68,4 +69,12 @@ function removeAdminFromGroup(id: number, user: any) {
         body: JSON.stringify(user)
     }
     return callAPI(requestOptions, '/groups/'+id+'/admins')
+}
+
+function createShortUrlWithExpiry(url: any) {
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify(url)
+    }
+    return callAPI(requestOptions, '/url')
 }
