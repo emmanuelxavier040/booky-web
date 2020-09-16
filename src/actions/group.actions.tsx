@@ -9,7 +9,8 @@ export const groupActions = {
     getMyGroups,
     getAdminUsersOfGroup,
     addAdminForGroup,
-    removeAdminFromGroup
+    removeAdminFromGroup,
+    createShortUrlWithExpiry
 }
 
 
@@ -108,5 +109,20 @@ function removeAdminFromGroup(id: number, user: any) {
             }
         )
         dispatch({ type: groupConstants.REMOVE_GROUP_ADMIN_REQUEST_ENDED })
+    }
+}
+
+function createShortUrlWithExpiry(url : any) {
+    return (dispatch: any) => {
+        dispatch({ type: groupConstants.CREATE_SHORTURL_REQUEST_STARTED })
+        groupService.createShortUrlWithExpiry(url).then(
+            response => {
+                dispatch({ type: groupConstants.SUCCESS_CREATE_SHORTURL_REQUEST, data: response})
+            },
+            error => {
+                dispatch({ type: groupConstants.FAILURE_CREATE_SHORTURL_REQUEST })
+            }
+        )
+        dispatch({ type: groupConstants.CREATE_SHORTURL_REQUEST_ENDED })
     }
 }

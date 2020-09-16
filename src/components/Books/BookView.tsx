@@ -8,7 +8,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { red } from '@material-ui/core/colors';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+import IconButton from '@material-ui/core/IconButton';
 import { BookProps } from './Book';
+import Tooltip from '@material-ui/core/Tooltip';
 
 interface BookViewProps {
   card: BookProps
@@ -66,6 +69,16 @@ const BookView = (props: BookViewProps) => {
     }
   }
 
+  const copyToClipBoard = () => {
+    const textField = document.createElement('textarea');
+    textField.innerText = redirectUrl;
+    const parentElement: any = document.getElementById('form-dialog-title');
+    parentElement.appendChild(textField);
+    textField.select();
+    document.execCommand('copy');
+    parentElement.removeChild(textField);
+  }
+
   let disabled: boolean = !props.editable
   
   return (
@@ -94,11 +107,19 @@ const BookView = (props: BookViewProps) => {
             disabled={true}
             autoFocus
             margin="dense"
-            id="name"
+            id="shortUrl"
             label="Short URL"
             type="url"
             fullWidth
             value={redirectUrl}
+            InputProps={{
+                          endAdornment: <Tooltip title='Copy to Clipboard'>
+                                          <IconButton onClick={copyToClipBoard}>                             
+                                            <FileCopyOutlinedIcon />
+                                          </IconButton>
+                                        </Tooltip>
+                          }}
+          
           /> <div><br /></div>
 
           <TextField
